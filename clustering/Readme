@@ -1,0 +1,76 @@
+# ✈️ AirTraffic Passenger Clustering Project
+
+## 📌 Project Overview
+This project focuses on **clustering air traffic passenger data** using **Hierarchical Clustering** (Agglomerative).  
+The dataset contains information about airlines, terminals, boarding areas, and passenger counts.  
+
+**Objective:**  
+- Maximize **operational efficiency**  
+- Segment airlines & terminals to achieve **better customer experience**  
+
+---
+
+## 📂 Dataset
+**Source:** `AirTraffic_Passenger_Statistics.csv`  
+- `Activity Period` → Time period (YYYYMM)  
+- `Operating Airline` → Airline name  
+- `GEO Region` → Geographic region  
+- `Terminal` & `Boarding Area` → Airport terminal details  
+- `Passenger Count` → Number of passengers  
+
+---
+
+## 🛠️ Steps Performed
+### 🔹 Data Preprocessing
+- Handled **missing values** (`Operating Airline IATA Code` dropped where null).  
+- Converted `Activity Period` into proper **datetime format**.  
+- Dropped duplicates.  
+- One-Hot Encoded categorical columns (`Airline, GEO Region, Terminal, Month…`).  
+- Scaled numerical columns (`Passenger Count, Year`) using **MinMaxScaler**.  
+- Treated **outliers** in passenger count with IQR capping (Winsorization).  
+
+### 🔹 Clustering
+- Built **dendrograms** to visualize possible clusters.  
+- Applied **Agglomerative Hierarchical Clustering** with multiple distance metrics (`euclidean, manhattan, cosine`) and linkage methods (`ward, complete, single, average`).  
+- Optimal number of clusters chosen based on **dendrogram cut & evaluation metrics**.  
+
+### 🔹 Evaluation Metrics
+- **Silhouette Score** → Cluster cohesion/separation.  
+- **Davies–Bouldin Index (DBI)** → Lower is better.  
+- **Calinski–Harabasz Score (CHS)** → Higher is better.  
+
+### 🔹 Hyperparameter Tuning
+- Implemented **GridSearchCV** for tuning cluster parameters.  
+- Best config found:  
+  - `n_clusters = 2`  
+  - `metric = euclidean`  
+  - `linkage = ward`  
+  - Best Silhouette ≈ **0.618**  
+
+---
+
+## 📊 Insights
+- **Cluster 0** → Medium passenger traffic (balanced airlines).  
+- **Cluster 1** → High passenger traffic (airlines with strong operations, high efficiency).  
+- **Cluster 2** → Low passenger traffic (niche/seasonal airlines).  
+
+**Business Takeaways:**  
+- Focus customer service & infrastructure on **Cluster 1 airlines** → maximize satisfaction.  
+- Improve efficiency for **Cluster 0** airlines.  
+- Investigate **Cluster 2** for potential optimization or marketing campaigns.  
+
+---
+
+## 🖥️ Tech Stack
+- **Python**: pandas, numpy, matplotlib, seaborn, scikit-learn, scipy  
+- **SQLAlchemy + MySQL** → Store raw & processed data  
+- **D-Tale** → Interactive dataset exploration  
+- **VS Code / Spyder** → Development environment  
+
+---
+
+## 🚀 How to Run
+1. Clone this repository:
+   ```bash
+   git clone https://github.com/your-username/airtraffic-clustering.git
+   cd airtraffic-clustering
